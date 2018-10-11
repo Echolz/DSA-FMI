@@ -1,0 +1,11 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+/out/
+
+### C++ ###
+cmake-build-debug
+CMakeLists.txt
+~$C++.docx
