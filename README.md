@@ -1,16 +1,14 @@
 # DSA-FMI
 Lectures, Homeworks and Exercises for Data Structures and Algorithms course at FMI 2018
 
-## Homeworks
-[First Homework](https://github.com/Echolz/DSA-FMI/tree/master/2.Homeworks)
+## [Homeworks](https://github.com/Echolz/DSA-FMI/tree/master/2.Homeworks "All homeworks")
 
-## Exams
-[All Exams](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams)
+* [First exam](https://github.com/Echolz/DSA-FMI/tree/master/2.Homeworks/1.First/src)
 
-* [First exam](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams/1.First)
+## [Exams](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams "All exams")
 
-## Coding Exercises in class
-[All Exercises](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises)
+* [First exam](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams/1.First/src)
 
-## Lectures
-[Lectures pdf](https://github.com/Echolz/DSA-FMI/tree/master/1.Lectures)
+## [Coding Exercises in class](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises "All excercises")
+
+## [Lectures](https://github.com/Echolz/DSA-FMI/tree/master/1.Lectures "All lectures")
