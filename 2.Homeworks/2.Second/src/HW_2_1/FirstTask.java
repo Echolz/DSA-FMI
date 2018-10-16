@@ -1,11 +1,15 @@
 package HW_2_1;
 
+import utils.*;
+import utils.Number;
+
 import java.util.*;
 
 public class FirstTask {
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
+        GenericSorter<Number> genericSorter = new GenericSorter<>();
 
         int n = scanner.nextInt();
 
@@ -26,25 +30,10 @@ public class FirstTask {
             return;
         }
 
-        Collections.sort(numbers);
+        genericSorter.mergeSort(numbers, 0, numbers.size() - 1);
 
         for (Number number : numbers) {
             System.out.print(number.value);
         }
-    }
-}
-
-class Number implements Comparable<Number> {
-    int value;
-    String valueStr;
-
-    Number(int value) {
-        this.value = value;
-        this.valueStr = Integer.toString(value);
-    }
-
-    @Override
-    public int compareTo(Number o) {
-        return Integer.compare(Integer.parseInt(valueStr + o.valueStr), Integer.parseInt(o.valueStr + valueStr)) * -1;
     }
 }

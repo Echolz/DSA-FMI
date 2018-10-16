@@ -1,7 +1,8 @@
 package HW_2_3;
 
+import utils.GenericSorter;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -13,12 +14,13 @@ public class ThirdTask {
         int k = scanner.nextInt();
 
         List<Integer> toysList = new ArrayList<>();
+        GenericSorter<Integer> genericSorter = new GenericSorter<>();
 
         for (int i = 0; i < n; i++) {
             toysList.add(scanner.nextInt());
         }
 
-        Collections.sort(toysList);
+        genericSorter.mergeSort(toysList, 0, toysList.size() - 1);
 
         int answer = 0;
 
@@ -34,3 +36,5 @@ public class ThirdTask {
         System.out.println(answer);
     }
 }
+
+
