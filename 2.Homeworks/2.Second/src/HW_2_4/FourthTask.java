@@ -12,7 +12,7 @@ public class FourthTask {
         StringBuilder answer = new StringBuilder();
         int q;
         int n;
-        int currentInversions;
+        long currentInversions;
         List<Integer> integerList = new ArrayList<>();
         InversionsCounter<Integer> inversionsCounter = new InversionsCounter<>();
 

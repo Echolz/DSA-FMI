@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InversionsCounter<T extends Comparable<T>> {
-    public int mergeSort(List<T> list, int left, int right) {
-        int inversions = 0;
+    public long mergeSort(List<T> list, int left, int right) {
+        long inversions = 0;
         if (left < right) {
             int middle = (left + right) / 2;
             inversions += mergeSort(list, left, middle);
@@ -15,13 +15,13 @@ public class InversionsCounter<T extends Comparable<T>> {
         return inversions;
     }
 
-    public int merge(List<T> list, int left, int right) {
+    public long merge(List<T> list, int left, int right) {
         int leftIndex= left;
         int leftEnd = (left + right) / 2;
         int rightIndex = leftEnd + 1;
         int rightEnd = right;
 
-        int inversions = 0;
+        long inversions = 0;
 
         List<T> tempArray = new ArrayList<>();
 
