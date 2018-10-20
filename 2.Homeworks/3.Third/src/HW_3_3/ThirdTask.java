@@ -1,8 +1,6 @@
 package HW_3_3;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class ThirdTask {
     public static void main(String[] args) {
@@ -16,68 +14,27 @@ public class ThirdTask {
 
         List<Long> numbers = new ArrayList<>(n);
 
+        PriorityQueue<Long> priorityQueue = new PriorityQueue<>(Comparator.comparingLong(o -> o * -1));
+
         for (int i = 0; i < n; i++) {
-            numbers.add(scanner.nextLong());
+            priorityQueue.add(scanner.nextLong());
         }
 
-        long counter = 0;
+        int answer = 0;
+        Long currentNumber;
+        while (priorityQueue.peek() > answer) {
+            currentNumber = priorityQueue.poll() - k;
 
-        if (allZeros(numbers) || numbers.size() == 0) {
-            System.out.println("0");
-            return;
-        }
+            answer ++;
 
-        int maxIndex;
-        while (!allZeros(numbers)) {
-            maxIndex = findMaxIndex(numbers);
-
-            numbers.set(maxIndex, numbers.get(maxIndex) - k);
-
-            tickMinute(numbers, maxIndex);
-            counter ++;
-        }
-
-        System.out.println(counter);
-    }
-
-    private static boolean allZeros(List<Long> numbers) {
-        boolean allzeros = true;
-
-        for (Long number : numbers) {
-            if (number > 0) {
-                return false;
-            }
-        }
-
-        return allzeros;
-    }
-
-    private static void tickMinute(List<Long> numbers, int index) {
-        for (int i = 0; i < numbers.size(); i++) {
-            if (i == index) {
+            if (currentNumber < answer) {
                 continue;
             }
-            numbers.set(i, numbers.get(i) - 1);
-        }
-    }
 
-    private static int findMaxIndex(List<Long> numbers) {
-        if (numbers.size() == 0) {
-            return -1;
+            priorityQueue.add(currentNumber);
+
         }
 
-        if (numbers.size() == 1) {
-            return 0;
-        }
-
-        int maxIndex = 0;
-
-        for (int i = 1; i < numbers.size(); i++) {
-            if (numbers.get(maxIndex) < numbers.get(i)) {
-                maxIndex = i;
-            }
-        }
-
-        return maxIndex;
+        System.out.println(answer - 1);
     }
 }
