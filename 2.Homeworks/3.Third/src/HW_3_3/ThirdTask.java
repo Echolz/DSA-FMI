@@ -5,36 +5,61 @@ import java.util.*;
 public class ThirdTask {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+
         int n = scanner.nextInt();
-        long k = scanner.nextLong();
 
-        if (k == 0) {
-            k++;
-        }
+        List<Integer> clothes = new ArrayList<>(n);
 
-        List<Long> numbers = new ArrayList<>(n);
-
-        PriorityQueue<Long> priorityQueue = new PriorityQueue<>(Comparator.comparingLong(o -> o * -1));
+        int k = scanner.nextInt();
 
         for (int i = 0; i < n; i++) {
-            priorityQueue.add(scanner.nextLong());
+            clothes.add(scanner.nextInt());
         }
 
-        int answer = 0;
-        Long currentNumber;
-        while (priorityQueue.peek() > answer) {
-            currentNumber = priorityQueue.poll() - k;
+        Collections.sort(clothes);
 
-            answer ++;
+        int answer = binarySearch(clothes, clothes.get(0), clothes.get(clothes.size() - 1), k, -1);
 
-            if (currentNumber < answer) {
-                continue;
+        System.out.println(answer);
+    }
+
+    static int binarySearch(List<Integer> clothes, int left, int right, int k, int minMinutes) {
+        if (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (canDry(clothes, k, mid)) {
+                return binarySearch(clothes, left, mid - 1, k, mid);
+            } else {
+                return binarySearch(clothes, mid + 1, right, k, minMinutes);
             }
-
-            priorityQueue.add(currentNumber);
-
         }
 
-        System.out.println(answer - 1);
+        return minMinutes;
+    }
+
+    static boolean canDry(List<Integer> clothes, int k, int minutes) {
+        int minutesNeededForBlower = 0;
+
+        List<Integer> wetClothes = new ArrayList<>();
+
+        for (Integer number : clothes) {
+            if (number - minutes > 0) {
+                wetClothes.add(number);
+            }
+        }
+
+        for (Integer number : wetClothes) {
+            minutesNeededForBlower += getDivision(number, k);
+        }
+
+        return minutesNeededForBlower <= minutes;
+    }
+
+    static int getDivision(int number, int k) {
+        if (number % k == 0) {
+            return number / k;
+        } else {
+            return (number / k) + 1;
+        }
     }
 }
