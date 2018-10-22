@@ -18,23 +18,29 @@ public class ThirdTask {
 
         Collections.sort(clothes);
 
-        int answer = binarySearch(clothes, clothes.get(0), clothes.get(clothes.size() - 1), k, -1);
+        List<Integer> potentialTimes = new ArrayList<>();
 
-        System.out.println(answer);
+        for (int i = clothes.get(0); i <= clothes.get(clothes.size() - 1); i++) {
+            potentialTimes.add(i);
+        }
+
+        int minIndex = binarySearch(clothes, potentialTimes, 0, potentialTimes.size() - 1, k, -1);
+
+        System.out.println(potentialTimes.get(minIndex));
     }
 
-    static int binarySearch(List<Integer> clothes, int left, int right, int k, int minMinutes) {
+    static int binarySearch(List<Integer> clothes, List<Integer> potentialTimes, int left, int right, int k, int minIndex) {
         if (left <= right) {
             int mid = left + (right - left) / 2;
 
-            if (canDry(clothes, k, mid)) {
-                return binarySearch(clothes, left, mid - 1, k, mid);
+            if (canDry(clothes, k, potentialTimes.get(mid))) {
+                return binarySearch(clothes, potentialTimes, left, mid - 1, k, mid);
             } else {
-                return binarySearch(clothes, mid + 1, right, k, minMinutes);
+                return binarySearch(clothes, potentialTimes, mid + 1, right, k, minIndex);
             }
         }
 
-        return minMinutes;
+        return minIndex;
     }
 
     static boolean canDry(List<Integer> clothes, int k, int minutes) {
@@ -44,12 +50,12 @@ public class ThirdTask {
 
         for (Integer number : clothes) {
             if (number - minutes > 0) {
-                wetClothes.add(number);
+                wetClothes.add(number - minutes);
             }
         }
 
         for (Integer number : wetClothes) {
-            minutesNeededForBlower += getDivision(number, k);
+            minutesNeededForBlower += getDivision(number, k - 1);
         }
 
         return minutesNeededForBlower <= minutes;
