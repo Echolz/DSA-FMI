@@ -1,4 +1,4 @@
-import U_1.GenericSortingSearching;
+import U_1_Sorting_Searching.GenericSortingSearching;
 
 import java.util.ArrayList;
 import java.util.List;
