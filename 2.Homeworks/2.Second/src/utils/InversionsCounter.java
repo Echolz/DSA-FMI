@@ -16,7 +16,7 @@ public class InversionsCounter<T extends Comparable<T>> {
     }
 
     public long merge(List<T> list, int left, int right) {
-        int leftIndex= left;
+        int leftIndex = left;
         int leftEnd = (left + right) / 2;
         int rightIndex = leftEnd + 1;
         int rightEnd = right;
@@ -25,32 +25,32 @@ public class InversionsCounter<T extends Comparable<T>> {
 
         List<T> tempArray = new ArrayList<>();
 
-        while(leftIndex <= leftEnd && rightIndex <= rightEnd) {
+        while (leftIndex <= leftEnd && rightIndex <= rightEnd) {
             if (list.get(leftIndex).compareTo(list.get(rightIndex)) <= 0) {
                 tempArray.add(list.get(leftIndex));
-                leftIndex ++;
+                leftIndex++;
             } else {
                 inversions += leftEnd - leftIndex + 1;
                 tempArray.add(list.get(rightIndex));
-                rightIndex ++;
+                rightIndex++;
             }
         }
 
         while (leftIndex <= leftEnd) {
             tempArray.add(list.get(leftIndex));
-            leftIndex ++;
+            leftIndex++;
         }
 
         while (rightIndex <= rightEnd) {
             tempArray.add(list.get(rightIndex));
-            rightIndex ++;
+            rightIndex++;
         }
 
         int index = left;
 
         for (T element : tempArray) {
             list.set(index, element);
-            index ++;
+            index++;
         }
 
         return inversions;
