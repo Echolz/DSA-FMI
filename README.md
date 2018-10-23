@@ -17,4 +17,8 @@ Lectures, Homeworks and Exercises for Data Structures and Algorithms course at F
 
 * [First exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/1.First/src)
 
+* [Second exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/2.Second/src)
+
+## [Utilities](https://github.com/Echolz/DSA-FMI/tree/master/5.Utilities "Generic classes for reuse during exams.")
+
 ## [Lectures](https://github.com/Echolz/DSA-FMI/tree/master/1.Lectures "All lectures")
