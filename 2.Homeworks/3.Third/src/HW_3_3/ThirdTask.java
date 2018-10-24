@@ -20,7 +20,11 @@ public class ThirdTask {
 
         List<Integer> potentialTimes = new ArrayList<>();
 
-        for (int i = clothes.get(0); i <= clothes.get(clothes.size() - 1); i++) {
+        int min = findMin(clothes);
+        int max = findMax(clothes);
+
+
+        for (int i = min; i < max + 1; i++) {
             potentialTimes.add(i);
         }
 
@@ -41,6 +45,38 @@ public class ThirdTask {
         }
 
         return minIndex;
+    }
+
+    static int findMax(List<Integer> clothes) {
+        if (clothes.size() == 1) {
+            return clothes.get(0);
+        }
+
+        int max = clothes.get(0);
+
+        for (int i = 1; i < clothes.size(); i++) {
+            if (clothes.get(i) > max) {
+                max = clothes.get(i);
+            }
+        }
+
+        return max;
+    }
+
+    static int findMin(List<Integer> clothes) {
+        if (clothes.size() == 1) {
+            return clothes.get(0);
+        }
+
+        int min = clothes.get(0);
+
+        for (int i = 1; i < clothes.size(); i++) {
+            if (clothes.get(i) < min) {
+                min = clothes.get(i);
+            }
+        }
+
+        return min;
     }
 
     static boolean canDry(List<Integer> clothes, int k, int minutes) {
