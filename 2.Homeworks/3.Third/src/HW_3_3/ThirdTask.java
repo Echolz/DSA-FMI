@@ -16,8 +16,6 @@ public class ThirdTask {
             clothes.add(scanner.nextInt());
         }
 
-        Collections.sort(clothes);
-
         List<Integer> potentialTimes = new ArrayList<>();
 
         int min = findMin(clothes);
