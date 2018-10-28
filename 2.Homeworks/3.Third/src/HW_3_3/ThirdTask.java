@@ -1,5 +1,6 @@
 package HW_3_3;
 
+import java.io.*;
 import java.util.*;
 
 public class ThirdTask {
@@ -16,29 +17,24 @@ public class ThirdTask {
             clothes.add(scanner.nextInt());
         }
 
-        List<Integer> potentialTimes = new ArrayList<>();
-
-        int min = findMin(clothes);
-        int max = findMax(clothes);
-
-
-        for (int i = min; i < max + 1; i++) {
-            potentialTimes.add(i);
+        if (k == 1 || k == 0) {
+            System.out.println(findMax(clothes));
+            return;
         }
 
-        int minIndex = binarySearch(clothes, potentialTimes, 0, potentialTimes.size() - 1, k, -1);
+        int minTime = binarySearch(clothes, 0, 1_000_000_000, k, 0);
 
-        System.out.println(potentialTimes.get(minIndex));
+        System.out.println(minTime);
     }
 
-    static int binarySearch(List<Integer> clothes, List<Integer> potentialTimes, int left, int right, int k, int minIndex) {
+    static int binarySearch(List<Integer> clothes, int left, int right, int k, int minIndex) {
         if (left <= right) {
             int mid = left + (right - left) / 2;
 
-            if (canDry(clothes, k, potentialTimes.get(mid))) {
-                return binarySearch(clothes, potentialTimes, left, mid - 1, k, mid);
+            if (canDry(clothes, k, mid)) {
+                return binarySearch(clothes, left, mid - 1, k, mid);
             } else {
-                return binarySearch(clothes, potentialTimes, mid + 1, right, k, minIndex);
+                return binarySearch(clothes, mid + 1, right, k, minIndex);
             }
         }
 
@@ -46,10 +42,6 @@ public class ThirdTask {
     }
 
     static int findMax(List<Integer> clothes) {
-        if (clothes.size() == 1) {
-            return clothes.get(0);
-        }
-
         int max = clothes.get(0);
 
         for (int i = 1; i < clothes.size(); i++) {
@@ -61,38 +53,23 @@ public class ThirdTask {
         return max;
     }
 
-    static int findMin(List<Integer> clothes) {
-        if (clothes.size() == 1) {
-            return clothes.get(0);
-        }
-
-        int min = clothes.get(0);
-
-        for (int i = 1; i < clothes.size(); i++) {
-            if (clothes.get(i) < min) {
-                min = clothes.get(i);
-            }
-        }
-
-        return min;
-    }
-
     static boolean canDry(List<Integer> clothes, int k, int minutes) {
-        int minutesNeededForBlower = 0;
+        int minutesNeededForBlower = minutes;
 
-        List<Integer> wetClothes = new ArrayList<>();
+        int num;
+        for (Integer clothe : clothes) {
+            num = clothe - minutes;
+            if (num <= 0) {
+                continue;
+            }
 
-        for (Integer number : clothes) {
-            if (number - minutes > 0) {
-                wetClothes.add(number - minutes);
+            minutesNeededForBlower -= getDivision(num, k - 1);
+            if (minutesNeededForBlower < 0) {
+                return false;
             }
         }
 
-        for (Integer number : wetClothes) {
-            minutesNeededForBlower += getDivision(number, k - 1);
-        }
-
-        return minutesNeededForBlower <= minutes;
+        return true;
     }
 
     static int getDivision(int number, int k) {
