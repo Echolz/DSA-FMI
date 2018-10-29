@@ -13,67 +13,88 @@ public class FourthTask2 {
 
         int n = scanner.nextInt();
         List<Integer> heights = new ArrayList<>();
-        List<Integer> prices = new ArrayList<>();
+
+        Map<Integer, Long> heightToPrice = new HashMap<>();
 
         for (int i = 0; i < n; i++) {
             heights.add(scanner.nextInt());
         }
 
+        List<Integer> uniqueHeights = new ArrayList<>();
+
         for (int i = 0; i < n; i++) {
-            prices.add(scanner.nextInt());
+            int currentPrice = scanner.nextInt();
+            int priceHeight = heights.get(i);
+
+            if (!heightToPrice.containsKey(priceHeight)) {
+                heightToPrice.put(priceHeight, 0L);
+                uniqueHeights.add(priceHeight);
+            }
+
+            heightToPrice.put(priceHeight, heightToPrice.get(priceHeight) + currentPrice);
         }
 
-        findPeak(heights, prices, 0, heights.size() - 1);
+        Collections.sort(uniqueHeights);
+
+        findPeak(uniqueHeights, heightToPrice, 0, uniqueHeights.size() - 1);
 
         System.out.println(bestPrice);
     }
 
-    static void findPeak(List<Integer> heights, List<Integer> prices, int left, int right) {
+    static void findPeak(List<Integer> heights, Map<Integer, Long> prices, int left, int right) {
         if (left <= right) {
             int mid = left + (right - left) / 2;
             int currentHeight = heights.get(mid);
 
             long firstSum = Long.MAX_VALUE;
             if (mid - 1 >= 0) {
-                if (memorizationMap.containsKey(mid - 1)) {
-                    firstSum = memorizationMap.get(mid - 1);
+                int firstHeight = heights.get(mid - 1);
+
+                if (memorizationMap.containsKey(firstHeight)) {
+                    firstSum = memorizationMap.get(firstHeight);
                 } else {
-                    firstSum = calculateSum(heights, prices, mid - 1);
-                    memorizationMap.put(mid - 1, firstSum);
+                    firstSum = calculateSum(heights, prices, firstHeight);
+                    memorizationMap.put(firstHeight, firstSum);
                 }
             }
 
             long secondSum = Long.MAX_VALUE;
             if (mid + 1 < heights.size()) {
-                if (memorizationMap.containsKey(mid + 1)) {
-                    secondSum = memorizationMap.get(mid + 1);
+                int secondHeight = heights.get(mid + 1);
+
+                if (memorizationMap.containsKey(secondHeight)) {
+                    secondSum = memorizationMap.get(secondHeight);
                 } else {
-                    secondSum = calculateSum(heights, prices, mid + 1);
-                    memorizationMap.put(mid + 1, secondSum);
+                    secondSum = calculateSum(heights, prices, secondHeight);
+                    memorizationMap.put(secondHeight, secondSum);
                 }
             }
 
             long currentSum = calculateSum(heights, prices, currentHeight);
 
-            if (firstSum >= currentSum && currentSum <= secondSum) {
-                bestPrice = Math.min(bestPrice, currentSum);
+            if (firstSum < currentSum) {
+                findPeak(heights, prices, left, mid - 1);
+                return;
             }
 
-            findPeak(heights, prices, left, mid - 1);
-            findPeak(heights, prices, mid + 1, right);
+            if (currentSum > secondSum) {
+                findPeak(heights, prices, mid + 1, right);
+                return;
+            }
 
+            bestPrice = currentSum;
         }
     }
 
-    private static long calculateSum(List<Integer> heights, List<Integer> prices, int currentHeight) {
+    private static long calculateSum(List<Integer> uniqueHeights, Map<Integer, Long> heightToPrice, int currentHeight) {
         long currentSum = 0;
 
-        for (int i = 0; i < heights.size(); i++) {
-            if (heights.get(i) == currentHeight) {
+        for (Integer height : uniqueHeights) {
+            if (height == currentHeight) {
                 continue;
             }
 
-            currentSum += Math.abs(heights.get(i) - currentHeight) * prices.get(i);
+            currentSum += Math.abs(height - currentHeight) * heightToPrice.get(height);
         }
         return currentSum;
     }
