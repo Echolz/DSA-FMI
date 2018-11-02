@@ -1,57 +1,14 @@
-package HW_4_1;
+package HW_4_5;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.InputMismatchException;
 
-public class FirstTask {
+public class FifthTask {
     public static void main(String[] args) {
-        InputReader inputReader = new InputReader();
-        int min = Integer.MAX_VALUE;
-        int max = Integer.MIN_VALUE;
-        long sum = 0;
-        int currentNumber;
 
-        Node head = null;
-        Node currentNode = null;
-
-        while (true) {
-            try {
-                currentNumber = inputReader.readInt();
-                if (head == null) {
-                    head = new Node(currentNumber);
-                    currentNode = head;
-                    continue;
-                }
-                currentNode.nextNode = new Node(currentNumber);
-                currentNode = currentNode.nextNode;
-            } catch (InputMismatchException e) {
-                break;
-            }
-        }
-
-        currentNode = head;
-
-        while (currentNode != null) {
-            min = Math.min(currentNode.value, min);
-            max = Math.max(currentNode.value, max);
-            sum += currentNode.value;
-            currentNode = currentNode.nextNode;
-        }
-
-        System.out.println(min + " " + max + " " + sum);
     }
 }
-
-class Node {
-    int value;
-    Node nextNode;
-
-    Node(int value) {
-        this.value = value;
-    }
-}
-
 class InputReader {
     private InputStream stream;
     private byte[] buf = new byte[1024];
@@ -80,12 +37,7 @@ class InputReader {
 
     int readInt() {
         int c = read();
-        int i = 0;
         while (isSpaceChar(c)) {
-            i ++;
-            if (i > 5) {
-                throw new InputMismatchException();
-            }
             c = read();
         }
         int sgn = 1;
@@ -95,7 +47,6 @@ class InputReader {
         }
         int res = 0;
         do {
-            i ++;
             if (c < '0' || c > '9') {
                 throw new InputMismatchException();
             }
@@ -181,6 +132,6 @@ class InputReader {
     }
 
     boolean isSpaceChar(int c) {
-        return c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == -1;
+        return c == '\n';
     }
 }
