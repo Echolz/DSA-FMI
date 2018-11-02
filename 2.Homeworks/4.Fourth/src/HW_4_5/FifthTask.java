@@ -9,6 +9,7 @@ public class FifthTask {
 
     }
 }
+
 class InputReader {
     private InputStream stream;
     private byte[] buf = new byte[1024];

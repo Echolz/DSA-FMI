@@ -82,7 +82,7 @@ class InputReader {
         int c = read();
         int i = 0;
         while (isSpaceChar(c)) {
-            i ++;
+            i++;
             if (i > 5) {
                 throw new InputMismatchException();
             }
@@ -95,7 +95,7 @@ class InputReader {
         }
         int res = 0;
         do {
-            i ++;
+            i++;
             if (c < '0' || c > '9') {
                 throw new InputMismatchException();
             }

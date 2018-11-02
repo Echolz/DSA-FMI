@@ -9,6 +9,8 @@ Lectures, Homeworks and Exercises for Data Structures and Algorithms course at F
 
 * [Third homework](https://github.com/Echolz/DSA-FMI/tree/master/2.Homeworks/3.Third/src)
 
+* [Fourth homework](https://github.com/Echolz/DSA-FMI/tree/master/2.Homeworks/4.Fourth/src)
+
 ## [Exams](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams "All exams")
 
 * [First exam](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams/1.First/src)

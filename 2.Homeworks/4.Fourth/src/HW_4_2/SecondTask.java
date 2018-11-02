@@ -43,7 +43,7 @@ public class SecondTask {
                 Pair currentPair = new Pair(currentNode.value, currentNode.nextNode.value);
 
                 if (!(pairs.contains(currentPair))) {
-                    answer ++;
+                    answer++;
                     pairs.add(currentPair);
                 }
             }
