@@ -79,6 +79,15 @@ class LinkedList {
             return;
         }
 
+        if (size == 1) {
+            head = null;
+            tail = null;
+            middle = null;
+            size = 0;
+            transferredMiddle = 0;
+            return;
+        }
+
         size --;
 
         if (size / 2 < transferredMiddle) {
@@ -91,6 +100,11 @@ class LinkedList {
     }
 
     void split() {
+
+        if (size == 0 || size == 1) {
+            return;
+        }
+
         Node newMid;
 
         if (size % 2 == 0) {
