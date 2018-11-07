@@ -29,7 +29,7 @@ public class TextWriter {
     }
 
     public int getRandomNumberInRange(int lower, int upper) {
-        return (int) (Math.random() * upper + lower);
+        return (int) (Math.random() * ((upper - lower) + 1)) + lower;
     }
 
     public void printOut(String toPrint) {

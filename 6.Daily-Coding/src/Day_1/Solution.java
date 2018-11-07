@@ -16,8 +16,11 @@ public class Solution {
             numbers.add(scanner.nextInt());
         }
 
-        Set<Integer> set = new HashSet<>();
+        System.out.println(solve(numbers, k));
+    }
 
+    private static String solve(List<Integer> numbers, int k) {
+        Set<Integer> set = new HashSet<>();
         boolean answer = false;
 
         for (Integer number : numbers) {
@@ -30,9 +33,9 @@ public class Solution {
         }
 
         if (answer) {
-            System.out.println("true");
+            return "true";
         } else {
-            System.out.println("false");
+            return "false";
         }
     }
 }
