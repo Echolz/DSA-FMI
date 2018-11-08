@@ -28,7 +28,7 @@ public class TextWriter {
 
     }
 
-    public int getRandomNumberInRange(int lower, int upper) {
+    static public int getRandomNumberInRange(int lower, int upper) {
         return (int) (Math.random() * ((upper - lower) + 1)) + lower;
     }
 
