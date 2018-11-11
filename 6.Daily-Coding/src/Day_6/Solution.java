@@ -1,13 +1,10 @@
 package Day_6;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Solution {
     private static List<Character> letters;
-    private static List<String> decodings;
-    private static int answer = 0;
+    private static Set<String> decodings;
 
     public static void main(String[] args) {
         initLetters();
@@ -17,7 +14,7 @@ public class Solution {
 
         solve(input);
 
-        System.out.println(answer);
+        System.out.println(decodings.size());
         for (String decoding : decodings) {
             System.out.println(decoding);
         }
@@ -30,7 +27,6 @@ public class Solution {
     private static void dfs(String input, int currentIndex, String currentDecoding) {
         if (currentIndex == input.length()) {
             decodings.add(currentDecoding);
-            answer++;
             return;
         }
 
@@ -56,7 +52,7 @@ public class Solution {
     }
 
     private static void initLetters() {
-        decodings = new ArrayList<>();
+        decodings = new TreeSet<>();
         letters = new ArrayList<>();
         for (int i = 1; i < 27; i++) {
             letters.add((char) (96 + i));
