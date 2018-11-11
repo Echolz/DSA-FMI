@@ -1,6 +1,7 @@
 package HW_5_1;
 
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
@@ -16,7 +17,7 @@ public class Solution {
         Node head = new Node(1);
         Node lastNode = head;
 
-        for (int i = 2; i <= n; i++) {
+        for (int i = 3; i <= n; i += 2) {
             Node currentNode = new Node(i);
             lastNode.right = currentNode;
             lastNode = currentNode;
@@ -26,8 +27,13 @@ public class Solution {
 
         Node currentNode = head;
 
-        while (currentNode.right != null) {
+        while (currentNode.right != currentNode) {
+            if (currentNode.right.right == currentNode) {
+                break;
+            }
+
             currentNode.right = currentNode.right.right;
+            currentNode = currentNode.right;
         }
 
         System.out.println(currentNode.value);
