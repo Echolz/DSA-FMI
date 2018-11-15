@@ -19,6 +19,8 @@ Lectures, Homeworks and Exercises for Data Structures and Algorithms course at F
 
 * [Second exam](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams/2.Second/src)
 
+* [Third exam](https://github.com/Echolz/DSA-FMI/tree/master/4.Exams/3.Third/src)
+
 ## [Coding Exercises in class](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises "All excercises")
 
 * [First exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/1.First/src)
@@ -28,6 +30,8 @@ Lectures, Homeworks and Exercises for Data Structures and Algorithms course at F
 * [Third exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/3.Third/src)
 
 * [Fourth exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/4.Fourth/)
+
+* [Fifth exercise](https://github.com/Echolz/DSA-FMI/tree/master/3.Exercises/5.Fifth/)
 
 ## [Daily-Coding](https://github.com/Echolz/DSA-FMI/tree/master/6.Daily-Coding/src "Daily Coding Exercises")
 
