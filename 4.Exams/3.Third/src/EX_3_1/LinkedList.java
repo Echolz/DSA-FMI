@@ -8,94 +8,73 @@ import java.util.regex.*;
 
 public class LinkedList {
     Node head;
-    Node tail;
-    int size;
 
     public LinkedList() {
         head = null;
-        tail = null;
-        size = 0;
     }
 
     public void add(int X, int pos) {
         Node nodeToAdd = new Node(X);
-
-        if (head == null && tail == null) {
+        if (head == null || pos == 0) {
+            nodeToAdd.right = head;
             head = nodeToAdd;
-            tail = head;
-            size++;
             if (pos != 0) {
                 System.out.print("add_last");
             }
             return;
         }
 
-        if (pos < 0 || pos >= size) {
-            tail.right = nodeToAdd;
-            tail = tail.right;
-            if (pos != size) {
-                System.out.print("add_last");
-            }
-            size++;
-            return;
-        }
-
-        if (pos == 0) {
-            nodeToAdd.right = head;
-            head = nodeToAdd;
-            size++;
-            return;
-        }
-
         Node addAfter = head;
+        int currentIndex = 0;
 
-        for (int i = 0; i < pos - 1; i++) {
+
+        while (addAfter.right != null && currentIndex < pos - 1) {
+            currentIndex++;
             addAfter = addAfter.right;
         }
 
-        Node tempNode = addAfter.right;
+        if (addAfter.right == null) {
+            addAfter.right = nodeToAdd;
+            if (currentIndex + 1 != pos) {
+                System.out.print("add_last");
+            }
+            return;
+        }
 
+        Node tempNode = addAfter.right;
         addAfter.right = nodeToAdd;
         nodeToAdd.right = tempNode;
-
-        size++;
     }
 
     public void remove(int pos) {
-        if (size == 0 || (pos < 0 || pos >= size)) {
+        if (pos < 0) {
             System.out.print("remove_failed");
             return;
         }
 
         if (pos == 0) {
-            if (size == 1) {
-                head = null;
-                tail = null;
-                size--;
+            if (head == null) {
+                System.out.print("remove_failed");
                 return;
             }
-
             head = head.right;
-            size--;
             return;
         }
 
         Node removeAfter = head;
+        int currentIndex = 0;
 
-        for (int i = 0; i < pos - 1; i++) {
+        while (removeAfter.right != null && currentIndex < pos - 1) {
+            currentIndex++;
             removeAfter = removeAfter.right;
         }
 
-        // remove the last element
-        if (pos == size - 1) {
-            tail = removeAfter;
-            tail.right = null;
-            size--;
+        if (removeAfter.right == null || currentIndex != pos - 1) {
+            System.out.print("remove_failed");
             return;
         }
 
         removeAfter.right = removeAfter.right.right;
-        size--;
     }
 
     public void print() {
@@ -108,10 +87,6 @@ public class LinkedList {
     }
 
     public void reverse() {
-        if (size == 0 || size == 1) {
-            return;
-        }
-
         Node newHead = null;
 
         Node temp = null;
@@ -130,11 +105,6 @@ public class LinkedList {
         }
 
         head = newHead;
-        tail = head;
-
-        while (tail.right != null) {
-            tail = tail.right;
-        }
     }
 
     public void printIsPalindrom() {
@@ -175,37 +145,36 @@ public class LinkedList {
     }
 
     public void removeAll(int X) {
-        if (size == 0) {
+        if (head == null) {
+            return;
+        }
+        
+        while (head != null) {
+            if (head.value == X) {
+                head = head.right;
+                continue;
+            }
+            break;
+        }
+
+        Node currentNode = head;
+
+        if (currentNode == null) {
             return;
         }
 
-        int index = 0;
-        Node currentNode = head;
-
-        while (currentNode != null) {
-            if (currentNode.value == X) {
-                currentNode = currentNode.right;
-                remove(index);
+        while (currentNode.right != null) {
+            if (currentNode.right.value == X) {
+                currentNode.right = currentNode.right.right;
                 continue;
             }
 
-            index++;
             currentNode = currentNode.right;
         }
     }
 
     public void group(int posX, int posY) {
-        if (posX < 0 || posX >= size) {
-            System.out.print("fail_grouping");
-            return;
-        }
-
-        if (posY < 0 || posY >= size) {
-            System.out.print("fail_grouping");
-            return;
-        }
-
-        if (posX > posY) {
+        if (posX < 0 || posY < posX) {
             System.out.print("fail_grouping");
             return;
         }
@@ -214,22 +183,33 @@ public class LinkedList {
             return;
         }
 
+
         int sum = 0;
         int currentIndex = 0;
 
         Node currentNode = head;
-        while (currentNode != null) {
-            if (currentIndex >= posX && currentIndex <= posY) {
+        Node addAfter = head;
+        while (currentNode != null && currentIndex <= posY) {
+            if (currentIndex == posX - 1) {
+                addAfter = currentNode;
+            }
+
+            if (currentIndex >= posX) {
                 sum += currentNode.value;
             }
-            System.out.println(currentIndex + " -> " + currentNode.value);
             currentIndex++;
             currentNode = currentNode.right;
         }
 
-        //sum is given;
-        // TODO: 16.11.2018 г.
+        if (currentIndex != posY + 1) {
+            System.out.print("fail_grouping");
+            return;
+        }
 
+        addAfter.value = sum;
+        for (int i = 0; i < posY - posX; i++) {
+            addAfter.right = addAfter.right.right;
+        }
     }
 
 
