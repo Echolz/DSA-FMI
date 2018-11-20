@@ -33,11 +33,11 @@ public class TextWriter {
     }
 
     public void printOut(String toPrint) {
-        printWriterOut.println(toPrint);
+        printWriterOut.print(toPrint);
     }
 
     public void printIn(String toPrint) {
-        printWriterIn.println(toPrint);
+        printWriterIn.print(toPrint);
     }
 
     public void closeWriter() {
