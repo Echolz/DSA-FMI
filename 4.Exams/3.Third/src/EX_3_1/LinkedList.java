@@ -47,16 +47,12 @@ public class LinkedList {
     }
 
     public void remove(int pos) {
-        if (pos < 0) {
+        if (pos < 0 || head == null) {
             System.out.print("remove_failed");
             return;
         }
 
         if (pos == 0) {
-            if (head == null) {
-                System.out.print("remove_failed");
-                return;
-            }
             head = head.right;
             return;
         }
@@ -148,7 +144,7 @@ public class LinkedList {
         if (head == null) {
             return;
         }
-        
+
         while (head != null) {
             if (head.value == X) {
                 head = head.right;
@@ -174,7 +170,7 @@ public class LinkedList {
     }
 
     public void group(int posX, int posY) {
-        if (posX < 0 || posY < posX) {
+        if (posX < 0 || posY < posX || head == null || posX * posY < 0) {
             System.out.print("fail_grouping");
             return;
         }
@@ -183,33 +179,33 @@ public class LinkedList {
             return;
         }
 
+        Node currrentNode = head;
 
         int sum = 0;
-        int currentIndex = 0;
 
-        Node currentNode = head;
-        Node addAfter = head;
-        while (currentNode != null && currentIndex <= posY) {
-            if (currentIndex == posX - 1) {
-                addAfter = currentNode;
+        for (int i = 0; i < posX; i++) {
+            if (currrentNode == null) {
+                System.out.print("fail_grouping");
+                return;
             }
 
-            if (currentIndex >= posX) {
-                sum += currentNode.value;
+            currrentNode = currrentNode.right;
+        }
+
+        for (int i = posX; i <= posY; i++) {
+            if (currrentNode == null) {
+                System.out.print("fail_grouping");
+                return;
             }
-            currentIndex++;
-            currentNode = currentNode.right;
+            sum += currrentNode.value;
+            currrentNode = currrentNode.right;
         }
 
-        if (currentIndex != posY + 1) {
-            System.out.print("fail_grouping");
-            return;
+        for (int i = posX; i <= posY; i++) {
+            remove(posX);
         }
 
-        addAfter.value = sum;
-        for (int i = 0; i < posY - posX; i++) {
-            addAfter.right = addAfter.right.right;
-        }
+        add(sum, posX);
     }
 
 
