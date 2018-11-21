@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Solution {
     public static void main(String[] args) {
-        String text = "aaaaaa";
-        int distinctLetters = 1;
+        String text = "aabacbebebe";
+        int distinctLetters = 3;
 
         binarySearch(distinctLetters, text.length(), text, distinctLetters, null);
 
@@ -20,9 +20,10 @@ public class Solution {
             if (ret.canFit) {
                 binarySearch(mid + 1, high, text, uniqueLetters, ret.value);
             } else {
-                binarySearch(low, mid - 1, text, uniqueLetters, "");
+                binarySearch(low, mid - 1, text, uniqueLetters, answer);
             }
         } else {
+            System.out.println(answer.length());
             System.out.println(answer);
         }
     }
@@ -62,7 +63,6 @@ public class Solution {
                         return new ReturnVal(true, text.substring(i - currentLength + 1, i + 1));
                     }
                 }
-
             }
         }
 
