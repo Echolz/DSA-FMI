@@ -17,11 +17,25 @@ public class Solution {
 
         int k = scanner.nextInt();
 
+        StringBuilder output = new StringBuilder();
+
         int left;
         int right;
+        int mid = (numbers.size() - 1) / 2;
         for (int i = 0; i < k; i++) {
             left = scanner.nextInt();
+            right = scanner.nextInt();
+
+            if (right <= mid || left > mid) {
+                output.append(dfs(head, left, right)).append("\n");
+            } else {
+                int firstSum = dfs(head.left, left, mid);
+                int secondSum = dfs(head.right, mid + 1, right);
+                output.append(firstSum + secondSum).append("\n");
+            }
         }
+
+        System.out.print(output.toString());
     }
 
     static Node split(List<Integer> numbers, int left, int right) {
@@ -41,17 +55,22 @@ public class Solution {
         }
     }
 
-    static void dfs(Node currentNode) {
-
-        if (currentNode.left != null) {
-            dfs(currentNode.left);
+    static int dfs(Node currentNode, int left, int right) {
+        if (currentNode.i == left && currentNode.j == right) {
+            return currentNode.sum;
         }
 
-        if (currentNode.right != null) {
-            dfs(currentNode.right);
+        int mid = currentNode.i + (currentNode.j - currentNode.i) / 2;
+
+        int sum;
+
+        if (right <= mid) {
+            sum = dfs(currentNode.left, left, right);
+        } else {
+            sum = dfs(currentNode.right, left, right);
         }
 
-        System.out.println(currentNode);
+        return sum;
     }
 }
 
