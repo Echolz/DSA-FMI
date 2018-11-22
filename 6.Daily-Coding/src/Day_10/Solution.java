@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Solution {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         List<Integer> numbers = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Solution {
         for (int i = 0; i < k; i++) {
             left = scanner.nextInt();
             right = scanner.nextInt();
-            output.append(dfs(head, left, right));
+            output.append(dfs(head, left, right)).append("\n");
         }
 
         System.out.print(output.toString());
