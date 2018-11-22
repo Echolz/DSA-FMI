@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class TextWriter {
+    private StringBuilder toOutput;
+    private StringBuilder toInput;
+
 
     private File fileOut;
     private FileWriter fileWriterOut;
@@ -26,10 +29,21 @@ public class TextWriter {
         fileWriterIn = new FileWriter(fileIn);
         printWriterIn = new PrintWriter(fileWriterIn);
 
+        toOutput = new StringBuilder();
+        toInput = new StringBuilder();
+
     }
 
     static public int getRandomNumberInRange(int lower, int upper) {
         return (int) (Math.random() * ((upper - lower) + 1)) + lower;
+    }
+
+    public StringBuilder getToOutput() {
+        return toOutput;
+    }
+
+    public StringBuilder getToInput() {
+        return toInput;
     }
 
     public void printOut(String toPrint) {

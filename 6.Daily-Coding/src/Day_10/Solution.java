@@ -1,11 +1,12 @@
 package Day_10;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Solution {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
         int n = scanner.nextInt();
         List<Integer> numbers = new ArrayList<>();
@@ -21,18 +22,10 @@ public class Solution {
 
         int left;
         int right;
-        int mid = (numbers.size() - 1) / 2;
         for (int i = 0; i < k; i++) {
             left = scanner.nextInt();
             right = scanner.nextInt();
-
-            if (right <= mid || left > mid) {
-                output.append(dfs(head, left, right)).append("\n");
-            } else {
-                int firstSum = dfs(head.left, left, mid);
-                int secondSum = dfs(head.right, mid + 1, right);
-                output.append(firstSum + secondSum).append("\n");
-            }
+            output.append(dfs(head, left, right));
         }
 
         System.out.print(output.toString());
@@ -59,17 +52,19 @@ public class Solution {
         if (currentNode.i == left && currentNode.j == right) {
             return currentNode.sum;
         }
-
         int mid = currentNode.i + (currentNode.j - currentNode.i) / 2;
-
         int sum;
-
-        if (right <= mid) {
-            sum = dfs(currentNode.left, left, right);
+        if (right <= mid || left > mid) {
+            if (right <= mid) {
+                sum = dfs(currentNode.left, left, right);
+            } else {
+                sum = dfs(currentNode.right, left, right);
+            }
         } else {
-            sum = dfs(currentNode.right, left, right);
+            int firstSum = dfs(currentNode.left, left, mid);
+            int secondSum = dfs(currentNode.right, mid + 1, right);
+            sum = firstSum + secondSum;
         }
-
         return sum;
     }
 }
