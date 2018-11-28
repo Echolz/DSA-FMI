@@ -28,16 +28,21 @@ public class Solution {
         }
 
         Set<Integer> visited = new HashSet<>();
+
         visited.add(1);
         dfs(1, nodesWithCaffees.get(1), visited);
         System.out.println(answers);
     }
 
-    static void dfs(int currentNode, int currentSum, Set<Integer> visitedNodes) {
-        if (currentSum > maxCaffees) {
-            return;
+    static void addConnection(int n1, int n2) {
+        if (!connections.containsKey(n1)) {
+            connections.put(n1, new ArrayList<>());
         }
 
+        connections.get(n1).add(n2);
+    }
+
+    static void dfs(int currentNode, int currentSum, Set<Integer> visitedNodes) {
         List<Integer> children = connections.get(currentNode);
         boolean isLeaf = true;
         List<Integer> notVisited = new ArrayList<>();
@@ -51,21 +56,23 @@ public class Solution {
         }
 
         if (isLeaf) {
-            answers++;
+            if (currentSum <= maxCaffees) {
+                answers++;
+            }
+            return;
+        }
+
+        if (currentSum > maxCaffees && currentNode != 1) {
             return;
         }
 
         for (Integer child : notVisited) {
             visitedNodes.add(child);
-            dfs(child, currentSum + nodesWithCaffees.get(child), visitedNodes);
+            if (nodesWithCaffees.get(child) == 1) {
+                dfs(child, currentSum + nodesWithCaffees.get(child), visitedNodes);
+            } else {
+                dfs(child, 0, visitedNodes);
+            }
         }
-    }
-
-    static void addConnection(int n1, int n2) {
-        if (!connections.containsKey(n1)) {
-            connections.put(n1, new ArrayList<>());
-        }
-
-        connections.get(n1).add(n2);
     }
 }
