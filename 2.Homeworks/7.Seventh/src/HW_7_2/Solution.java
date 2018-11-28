@@ -1,8 +1,6 @@
 package HW_7_2;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class Solution {
 
@@ -16,37 +14,58 @@ public class Solution {
 
         StringBuilder output = new StringBuilder();
 
-        for (int i = 1; i <= n; i++) {
-            int currentNum = scanner.nextInt();
-            if (belowMedian.isEmpty()) {
-                belowMedian.add(currentNum);
-                output.append(getAvg(belowMedian.peek(), 0, 1)).append("\n");
-                continue;
+        int firstNum = scanner.nextInt();
+        int secondNum = scanner.nextInt();
+
+        output.append(getAvg(firstNum));
+        output.append(getAvg(firstNum, secondNum));
+
+        belowMedian.add(Math.min(firstNum, secondNum));
+        aboveMedian.add(Math.max(firstNum, secondNum));
+
+        for (int i = 2; i < n; i++) {
+            int currentNumber = scanner.nextInt();
+            if (currentNumber < belowMedian.peek()) {
+                belowMedian.add(currentNumber);
+            } else {
+                aboveMedian.add(currentNumber);
             }
 
-            if (aboveMedian.isEmpty()) {
-                aboveMedian.add(currentNum);
-                output.append(getAvg(belowMedian.peek(), aboveMedian.peek(), 2)).append("\n");
-                continue;
+            int sizeDiff = belowMedian.size() - aboveMedian.size();
+
+            if (sizeDiff == 2) {
+                aboveMedian.add(belowMedian.poll());
             }
 
-            aboveMedian.add(currentNum);
-
-            if (aboveMedian.size() - belowMedian.size() == 2) {
+            if (sizeDiff == -2) {
                 belowMedian.add(aboveMedian.poll());
             }
 
-            if (i % 2 == 1) {
-                output.append(getAvg(aboveMedian.peek(), 0, 1)).append("\n");
-            } else {
-                output.append(getAvg(belowMedian.peek(), aboveMedian.peek(), 2)).append("\n");
+            int sizeOfHeaps = i + 1;
+
+            if (sizeOfHeaps % 2 == 0) {
+                output.append(getAvg(belowMedian.peek(), aboveMedian.peek()));
+                continue;
             }
+
+            if (belowMedian.size() > aboveMedian.size()) {
+                output.append(getAvg(belowMedian.peek()));
+                continue;
+            }
+
+            output.append(getAvg(aboveMedian.peek()));
         }
 
         System.out.println(output.toString());
     }
 
-    public static String getAvg(int n1, int n2, double k) {
-        return String.format("%.1f", (double) (n1 + n2) / k);
+    public static String getAvg(int... numbers) {
+        if (numbers.length == 1) {
+            return String.format("%.1f\n", (double) numbers[0]);
+        } else {
+            int sum = numbers[0] + numbers[1];
+
+            return String.format("%.1f\n", (double) sum / 2.0d);
+        }
     }
 }
