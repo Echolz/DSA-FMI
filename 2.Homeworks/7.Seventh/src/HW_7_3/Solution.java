@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Solution {
     static Map<Integer, List<Integer>> connections = new HashMap<>();
-    static Set<Integer> nodesWithCaffees = new HashSet<>();
+    static Map<Integer, Integer> nodesWithCaffees = new HashMap<>();
     static int maxCaffees = -1;
     static int n = -1;
     static int answers = 0;
@@ -16,10 +16,7 @@ public class Solution {
 
         for (int i = 1; i < n + 1; i++) {
             int state = scanner.nextInt();
-            if (state == 0) {
-                continue;
-            }
-            nodesWithCaffees.add(i);
+            nodesWithCaffees.put(i, state);
         }
 
         for (int i = 0; i < n - 1; i++) {
@@ -30,31 +27,37 @@ public class Solution {
             addConnection(n2, n1);
         }
 
-        dfs(1, 0, new HashSet<>());
+        Set<Integer> visited = new HashSet<>();
+        visited.add(1);
+        dfs(1, nodesWithCaffees.get(1), visited);
         System.out.println(answers);
     }
 
     static void dfs(int currentNode, int currentSum, Set<Integer> visitedNodes) {
-        if (nodesWithCaffees.contains(currentNode)) {
-            currentSum++;
+        if (currentSum > maxCaffees) {
+            return;
         }
-        visitedNodes.add(currentNode);
 
-        boolean isLeaf = true;
         List<Integer> children = connections.get(currentNode);
+        boolean isLeaf = true;
+        List<Integer> notVisited = new ArrayList<>();
 
         for (Integer child : children) {
             if (visitedNodes.contains(child)) {
                 continue;
             }
-
             isLeaf = false;
-            dfs(child, currentSum, visitedNodes);
-            visitedNodes.remove(child);
+            notVisited.add(child);
         }
 
-        if (isLeaf && currentSum <= maxCaffees) {
+        if (isLeaf) {
             answers++;
+            return;
+        }
+
+        for (Integer child : notVisited) {
+            visitedNodes.add(child);
+            dfs(child, currentSum + nodesWithCaffees.get(child), visitedNodes);
         }
     }
 
