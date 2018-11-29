@@ -1,31 +1,29 @@
-package EX_4_2;
+package EX_4_3;
 
 import java.util.Scanner;
 
-public class Solution {
+class Solution {
+    static int counter = 0;
 
-    static int left = 0;
-    static int right = 0;
-
-    public static void leftRight(Node root) {
+    public static void leaves(Node root) {
         dfs(root);
-
-        System.out.println(String.format("[%d,%d]", left, right));
+        System.out.println(counter);
     }
 
     private static void dfs(Node root) {
         if (root.leftNode == null && root.rightNode == null) {
+            if (root.data % 2 == 1) {
+                counter += root.data;
+            }
             return;
         }
 
         if (root.leftNode != null) {
             dfs(root.leftNode);
-            left++;
         }
 
         if (root.rightNode != null) {
             dfs(root.rightNode);
-            right++;
         }
     }
 
@@ -55,7 +53,7 @@ public class Solution {
             root = insert(root, data);
         }
         scan.close();
-        leftRight(root);
+        leaves(root);
     }
 }
 
