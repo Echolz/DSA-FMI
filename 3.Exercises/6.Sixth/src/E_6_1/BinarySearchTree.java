@@ -75,6 +75,8 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         handleWrapper(wrapper);
 
+        size--;
+
         return true;
     }
 
@@ -90,6 +92,22 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
         // we are removing the head
         if (parent == null) {
+            if (hasLeftChild && hasRightChild) {
+                Node<T> newNode = dfsMinValueDelete(head, head.getRight(), true);
+                head.setValue(newNode.getValue());
+                return;
+            }
+
+            if (hasLeftChild) {
+                head = head.getLeft();
+                return;
+            }
+
+            if (hasRightChild) {
+                head = head.getRight();
+                return;
+            }
+
             return;
         }
 
@@ -97,7 +115,6 @@ public class BinarySearchTree<T extends Comparable<T>> {
         if (hasLeftChild && hasRightChild) {
             Node<T> newNode = dfsMinValueDelete(nodeToReplace, nodeToReplace.getRight(), true);
             nodeToReplace.setValue(newNode.getValue());
-
             return;
         }
 
@@ -164,8 +181,11 @@ public class BinarySearchTree<T extends Comparable<T>> {
 
     public List<T> getSorted() {
         List<T> sortedList = new ArrayList<>();
-        dfsInOrder(head, sortedList);
+        if (head == null) {
+            return sortedList;
+        }
 
+        dfsInOrder(head, sortedList);
         return sortedList;
     }
 
