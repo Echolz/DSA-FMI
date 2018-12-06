@@ -41,9 +41,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
             return null;
         }
 
-        Node<T> node = dfsMaxValue(head);
-
-        return node.getValue();
+        return dfsMaxValue(head);
     }
 
     public T getMinValue() {
@@ -51,9 +49,15 @@ public class BinarySearchTree<T extends Comparable<T>> {
             return null;
         }
 
-        Node<T> node = dfsGetMinValue(head);
+        return dfsMinValue(head);
+    }
 
-        return node.getValue();
+    private T dfsMinValue(Node<T> curNode) {
+        if (curNode.getLeft() != null) {
+            return dfsMinValue(curNode.getLeft());
+        }
+
+        return curNode.getValue();
     }
 
     public boolean remove(T value) {
@@ -74,6 +78,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return true;
     }
 
+
     private void handleWrapper(Wrapper<T> wrapper) {
         // TODO: 6.12.2018 g. with two children and node is head
 
@@ -83,28 +88,40 @@ public class BinarySearchTree<T extends Comparable<T>> {
         boolean hasLeftChild = nodeToReplace.getLeft() != null;
         boolean hasRightChild = nodeToReplace.getRight() != null;
 
+        // we are removing the head
+        if (parent == null) {
+            return;
+        }
+
+        // we are removing node with two children
+        if (hasLeftChild && hasRightChild) {
+            Node<T> newNode = dfsMinValueDelete(nodeToReplace, nodeToReplace.getRight(), true);
+            nodeToReplace.setValue(newNode.getValue());
+
+            return;
+        }
+
         if (!hasLeftChild && !hasRightChild) {
             if (fromRight) {
                 parent.setRight(null);
             } else {
                 parent.setLeft(null);
             }
+            return;
         }
 
-        if (hasLeftChild && !hasRightChild) {
-            if (fromRight) {
-                parent.setRight(nodeToReplace.getLeft());
-            } else {
-                parent.setLeft(nodeToReplace.getLeft());
-            }
+        if (hasLeftChild) {
+            nodeToReplace = nodeToReplace.getLeft();
         }
 
-        if (!hasLeftChild && hasRightChild) {
-            if (fromRight) {
-                parent.setRight(nodeToReplace.getRight());
-            } else {
-                parent.setLeft(nodeToReplace.getRight());
-            }
+        if (hasRightChild) {
+            nodeToReplace = nodeToReplace.getRight();
+        }
+
+        if (fromRight) {
+            parent.setRight(nodeToReplace);
+        } else {
+            parent.setLeft(nodeToReplace);
         }
     }
 
@@ -124,20 +141,25 @@ public class BinarySearchTree<T extends Comparable<T>> {
         return null;
     }
 
-    private Node<T> dfsMaxValue(Node<T> curNode) {
+    private T dfsMaxValue(Node<T> curNode) {
         if (curNode.getRight() != null) {
             return dfsMaxValue(curNode.getRight());
         }
 
-        return curNode;
+        return curNode.getValue();
     }
 
-    private Node<T> dfsGetMinValue(Node<T> curNode) {
+    private Node<T> dfsMinValueDelete(Node<T> parent, Node<T> curNode, boolean fromRight) {
         if (curNode.getLeft() != null) {
-            return dfsGetMinValue(curNode.getLeft());
+            return dfsMinValueDelete(curNode, curNode.getLeft(), false);
+        } else {
+            if (fromRight) {
+                parent.setRight(null);
+            } else {
+                parent.setLeft(null);
+            }
+            return curNode;
         }
-
-        return curNode;
     }
 
     public List<T> getSorted() {
@@ -229,6 +251,10 @@ class Node<T extends Comparable<T>> {
 
     T getValue() {
         return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
     }
 }
 
