@@ -11,6 +11,7 @@ public class Main {
 
             Graph<Integer> graph = new Graph<>();
 
+            scanner.nextLine();
             for (Integer j = 0; j < m; j++) {
                 Integer from = scanner.nextInt();
                 Integer to = scanner.nextInt();
@@ -86,6 +87,10 @@ class Graph<T> {
 
             for (Vertex<T> adj : graph.get(curretnNode)) {
                 Integer weight = wei + adj.weight;
+
+                if (visited.contains(curretnNode)) {
+                    continue;
+                }
 
                 if ((shortestPaths.get(adj.toNode) == -1 || shortestPaths.get(adj.toNode) > weight)) {
                     shortestPaths.put(adj.toNode, weight);
