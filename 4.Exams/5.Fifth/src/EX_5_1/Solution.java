@@ -45,5 +45,6 @@ public class Solution {
         }
 
         map.put(user, map.get(user) + 1);
+
     }
 }
