@@ -14,8 +14,6 @@ public class ThirdTask {
         int numberOfGroups = scanner.nextInt();
 
         for (int i = 0; i < numberOfStudents; i++) {
-
-
             String studentName = scanner.next();
             int studentGroup = scanner.nextInt();
 
@@ -30,6 +28,8 @@ public class ThirdTask {
         int k = numberOfStudents - 1;
         if (k % 2 == 1) {
             k++;
+        } else {
+            k += 2;
         }
         queue.print(k);
     }
