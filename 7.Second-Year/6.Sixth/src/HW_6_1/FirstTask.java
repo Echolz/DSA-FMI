@@ -58,7 +58,7 @@ public class FirstTask {
         return Math.sqrt(pow(x) + pow(y));
     }
 
-    private static int pow(int n) {
+    private static long pow(int n) {
         return n * n;
     }
 }
