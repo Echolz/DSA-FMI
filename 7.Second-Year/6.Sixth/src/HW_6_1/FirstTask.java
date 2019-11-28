@@ -2,12 +2,12 @@ package HW_6_1;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.Objects;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class FirstTask {
-
-    static Set<House> visitedHouses = new HashSet<>();
-
     public static void main(String[] args) {
         InputReader scanner = new InputReader();
 
@@ -15,7 +15,7 @@ public class FirstTask {
 
         int firstNHouses = scanner.readInt();
 
-        List<House> houses = new ArrayList<>();
+        Queue<House> houses = new PriorityQueue<>();
 
         for (int i = 0; i < numberOfHouses; i++) {
             int currentX = scanner.readInt();
@@ -27,38 +27,15 @@ public class FirstTask {
         }
 
         for (int i = 0; i < firstNHouses; i++) {
-            System.out.println(findMaxHouse(houses));
+            System.out.println(houses.poll());
         }
-    }
-
-    private static House findMaxHouse(List<House> houses) {
-        House minHouse = new House(0, 0);
-        minHouse.distance = Double.MAX_VALUE;
-
-        for (House house : houses) {
-            if (minHouse.compareTo(house) > 0 && !visitedHouses.contains(house)) {
-                minHouse = house;
-            }
-        }
-
-        visitedHouses.add(minHouse);
-        return minHouse;
-    }
-
-    private static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
     }
 
     private static double calculateDistance(int x, int y) {
         return Math.sqrt(pow(x) + pow(y));
     }
 
-    private static long pow(int n) {
+    private static long pow(long n) {
         return n * n;
     }
 }
