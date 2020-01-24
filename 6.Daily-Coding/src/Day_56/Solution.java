@@ -15,7 +15,7 @@ public class Solution {
     }
 
     private static int binarySearch(int[] nums, int left, int right, int target) {
-        int middle = left + (right - left) / 2;
+        int middle;
 
         while (left <= right) {
             middle = left + (right - left) / 2;
